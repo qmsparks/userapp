@@ -1,15 +1,45 @@
-const faker = require('faker');
+const {User} = require('./models');
 
-const seedArray = [];
-for (let i = 0; i < 1000; i++) {
-  const newObj = {
-    name: faker.name.findName(),
-    age: 30,
-    email: faker.internet.email(),
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+// ANCHOR create
+async function makeUser(firstName, lastName, age, email) {
+  try {
+    const newUser = await User.create({firstName, lastName, age, email});
+    console.log(newUser);
+  } catch (err) {
+    console.log(err);
   }
-  seedArray.push(newObj);
 }
 
-console.log(seedArray);
+// makeUser('Quinlan Sparks', 29, 'quinlan.sparks@generalassemb.ly');
+
+// ANCHOR create that can also read
+async function findOrCreateUser(name, age, email) {
+  try {
+    const [user, created] = await User.findOrCreate({
+      where: {name},
+      defaults: {age, email}
+    });
+
+    console.log('USER:', user); // => object
+    console.log('WAS CREATED: ', created); // => true or false
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// findOrCreateUser('Quinlan Sparks', 29, 'quinlan.sparks@generalassemb.ly');
+// findOrCreateUser('Rome Bell', 33, 'rome.bell@ga.co');
+
+// ANCHOR read
+async function fetchUserByName(name) {
+  try {
+    const foundUser = await User.findOne({
+      where: {name}
+    });
+    console.log(foundUser);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+fetchUserByName('Quinlan Sparks');

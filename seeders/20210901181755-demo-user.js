@@ -4,8 +4,9 @@ const faker = require('faker');
 const seedArray = [];
 for (let i = 0; i < 1000; i++) {
   const newObj = {
-    name: faker.name.findName(),
-    age: 30,
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    age: Math.floor(Math.random()*85),
     email: faker.internet.email(),
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
@@ -29,6 +30,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkDelete('Users', null, {});
     /**
      * Add commands to revert seed here.
      *
