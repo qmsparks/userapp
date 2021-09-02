@@ -22,8 +22,9 @@ app.get('/users', async (req, res) => {
   try {
     const allUsers = await User.findAll({});
     const parsedUsers = allUsers.map(u => u.toJSON());
-
-    context = {users: parsedUsers}
+    context = {
+      users: parsedUsers
+    }
     res.render('users/index', context)
   } catch (err) {
     console.log(err);
