@@ -14,6 +14,8 @@ for (let i = 0; i < 1000; i++) {
   seedArray.push(newObj);
 }
 
+console.log(seedArray);
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 
